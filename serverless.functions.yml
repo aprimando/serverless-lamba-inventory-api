@@ -1,0 +1,32 @@
+getInventory:
+  handler: src/handlers/getInventory.handler
+  events:
+    - http:
+        method: GET
+        path: /inventory
+        cors: true
+
+createInventoryItem:
+  handler: src/handlers/createInventoryItem.handler
+  events:
+    - http:
+        method: POST
+        path: /inventory
+        cors: true
+
+
+updateInventoryItem:
+  handler: src/handlers/updateInventoryItem.handler
+  events:
+    - http:
+        method: PATCH
+        path: /inventory/{id}
+        cors: true
+
+deleteInventoryItem:
+  handler: src/handlers/deleteInventoryItem.handler
+  events:
+    - http:
+        method: DELETE
+        path: /inventory/{id}
+        cors: true

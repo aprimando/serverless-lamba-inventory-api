@@ -1,0 +1,28 @@
+service:
+  name: simple-inventory-api
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs14.x
+  memorySize: 256
+  stage: ${opt:stage, 'dev'}
+  environment:
+    INVENTORY_TABLE_NAME: ${self:custom.InventoryTable.name}
+  iamRoleStatements:
+    - ${file(iam/InventoryTableIAM.yml):InventoryTableIAM}
+
+resources:
+  Resources:
+    InventoryTable: ${file(resources/InventoryTable.yml):InventoryTable}
+  
+functions: ${file(serverless.functions.yml)}
+
+custom:
+  InventoryTable:
+    name: !Ref InventoryTable
+    arn: !GetAtt InventoryTable.Arn
